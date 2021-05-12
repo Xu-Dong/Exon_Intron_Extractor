@@ -27,7 +27,11 @@ def extract_exon(gtf_file):
 			if geneid_patt:
 				gene_id = geneid_patt.group(1)
 			else:
-				gene_id = "NA"
+				geneid_patt = re.search(r'gene_id\s"(\w+\.\d+)";',w[8])
+				if geneid_patt:
+					gene_id = geneid_patt.group(1)
+				else:
+					gene_id = "NA"
 			if transcript_patt:
 				transcript_id = transcript_patt.group(1)
 				transcript_id = chrn+":"+transcript_id+":"+gene_id+":"+strand
