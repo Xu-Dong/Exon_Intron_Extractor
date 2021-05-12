@@ -4,7 +4,7 @@
 This script parse a gtf file and extract all exons and introns for each transcript in it.
 
 ## Usage:
-`
+```
 usage: extractExon_and_Intron_from_gtf.py [-h] [--gtf GTF]
                                           [--out_exon OUT_EXON]
                                           [--out_intron OUT_INTRON]
@@ -15,7 +15,7 @@ optional arguments:
   --out_exon OUT_EXON   specify a filename for exon output
   --out_intron OUT_INTRON
                         specify a filename for intron output
-`
+```
 
 ## output format
 Two bed files containing exons and introns separately will be produced.
