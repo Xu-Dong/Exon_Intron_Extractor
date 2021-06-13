@@ -66,12 +66,54 @@ def extract_intron(exon_list):
 		intron_list.append(intron)
 	return intron_list
 
+# get the range of a gene, input a gtf file and output a dict: {gene:(chr,start,end,strand,genetype)}
+def extract_gene_range(gtf_file,skip_rows):
+	keep_chr = []
+	for i in range(22):
+		keep_chr.append('chr'+str(i+1))
+	keep_chr = keep_chr + ['chrX','chrY']
+	with open(gtf_file,'r') as fh:
+		gene_range = {}
+		geneid,genename,genetype = '','','',''
+		for line in fh.readlines()[skip_rows:]:
+			line = line.strip()
+			w = line.split("\t")
+			chrn = w[0]
+			strand = w[6]
+			entry_type = w[2]
+			gene_start = int(w[3])
+			gene_end = int(w[4])
+			# build match patterns
+			geneid_patt_1 = re.search(r'gene_id\s"(\w+)";',w[8])
+			geneid_patt_2 = re.search(r'gene_id\s"(\w+\.\d+)";',w[8])# with version number
+			genename_patt = re.search(r'gene_name\s"(.*?)";',w[8])
+			genetype_patt = re.search(r'gene_type\s"(.*?)";',w[8])
+			if geneid_patt_1:
+				gene_id = geneid_patt_1.group(1)
+			elif geneid_patt_2:
+				gene_id = geneid_patt_2.group(1)
+			else:
+				gene_id = "NA"
+			if genename_patt:
+				genename = genename_patt.group(1)
+			else:
+				genename = "NA"
+			if genetype_patt:
+				genetype = genetype_patt.group(1)
+			else:
+				genetype = "NA"
+			if w[2]=="gene" and chrn in keep_chr:
+				gene_range[gene_id] = (chrn,str(gene_start-1),str(gene_end),strand,genetype)
+			else:
+				continue
+	return gene_range
 # Main -----------------------------------
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--gtf',help="specify a gtf file")
 parser.add_argument('--out_exon',help="specify a filename for exon output")
 parser.add_argument('--out_intron',help="specify a filename for intron output")
+
 
 args = parser.parse_args()
 
