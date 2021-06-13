@@ -1,7 +1,6 @@
 #!~/tools/anaconda2/bin/python
 '''
 Extract exons and introns from given gtf file, and generate bed files
-Usage: python extract_intron_from_gtf.py --gtf <gtf> --out <bed>
 Code by: Xudong Zou
 Start time: 2021-02-20
 '''
