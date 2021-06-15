@@ -1,9 +1,12 @@
 #!~/tools/anaconda2/bin/python
+
 '''
 Extract exons and introns from given gtf file, and generate bed files
 Code by: Xudong Zou
 Start time: 2021-02-20
+LastModified time: 2021-06-15
 '''
+
 import argparse
 import re
 
@@ -74,7 +77,7 @@ def extract_gene_range(gtf_file,skip_rows):
 	keep_chr = keep_chr + ['chrX','chrY']
 	with open(gtf_file,'r') as fh:
 		gene_range = {}
-		geneid,genename,genetype = '','','',''
+		geneid,genename,genetype = '','',''
 		for line in fh.readlines()[skip_rows:]:
 			line = line.strip()
 			w = line.split("\t")
@@ -116,7 +119,7 @@ parser = argparse.ArgumentParser(description='')
 parser.add_argument('--gtf',help="specify a gtf file")
 parser.add_argument('--out_exon',help="specify a filename for exon output")
 parser.add_argument('--out_intron',help="specify a filename for intron output")
-parser.add_argument('--geneRange', type=bool, default=True,action="store_true",help="if True, output gene range into a bed file: geneRange.bed")
+parser.add_argument('--geneRange', default=True,action="store_true",help="if True, output gene range into a bed file: geneRange.bed")
 
 # interpret args
 args = parser.parse_args()
@@ -161,3 +164,4 @@ if args.geneRange:
 print "Done!"
 print "Generate exon bed in file:%s" % (args.out_exon)
 print "Generate intron bed in file:%s" % (args.out_intron)
+print "Defaulty there should also have one file namely geneRange.bed containing gene ranges"
