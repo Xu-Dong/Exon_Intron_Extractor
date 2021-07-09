@@ -1,6 +1,6 @@
 #!~/tools/anaconda2/bin/python
 '''
-#Convert a gtf into a bed file with 12 columns. In the output bed file, each row is a transcript and blocks are exons.
+#Convert a gtf into a bed file with 12 columns. In the output bed file, each row represents a transcript and blocks in each transcript are exons.
 #Input: a gtf file
 #Output: a bed file and a tab-separated file indicates the transcript_id and its corresponding gene_name
 Usage: python gtf2bed12.py --gtf <gtf> --out <bed>
