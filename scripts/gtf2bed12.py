@@ -3,7 +3,7 @@
 #Convert a gtf into a bed file with 12 columns. In the output bed file, each row represents a transcript and blocks in each transcript are exons.
 #Input: a gtf file
 #Output: a bed file and a tab-separated file indicates the transcript_id and its corresponding gene_name
-Usage: python gtf2bed12.py --gtf <gtf> --out <bed>
+Usage: python gtf2bed12.py --gtf <gtf> --out <dir>
 Code by: Xudong Zou
 Start time: 2021-06-09
 '''
@@ -168,8 +168,7 @@ def extract_transcript(gtf_file,skip_rows):
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-g','--gtf',help="specify a gtf file", required=True)
-parser.add_argument('-o','--out_bed',help="specify a filename for exon output",default="gene_annotation.bed")
-#parser.add_argument('-o','--out_bed',help="specify a filename for exon output",default="gene_annotation.bed")
+parser.add_argument('-o','--out_dir',help="specify a directory for the exon output and transcript-genenames",default="gene_annotation.bed")
 
 
 args = parser.parse_args()
@@ -181,8 +180,8 @@ transcript_coord = extract_transcript(args.gtf,5)
 
 
 # print out gene annotation in bed12 format; transcript_id+":"+gene_id+":"+genename+":"+chrn+":"+strand
-fho = open(args.out_bed,'w')
-fho2 = open("transcript_to_geneName.txt",'w')
+fho = open(args.out_dir + "/gene_annotation.bed",'w')
+fho2 = open(args.out_dir + "/transcript_to_geneName.txt",'w')
 s_codon,e_codon = '',''
 for t in exon_dict:
 	tid,gid,gname,chrname,strand = t.split(":")
