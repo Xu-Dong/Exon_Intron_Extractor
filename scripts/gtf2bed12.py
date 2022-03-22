@@ -203,8 +203,8 @@ for t in exon_dict:
 		s_codon = str(t_start)
 		e_codon = str(t_end)
         
-	print >>fho, "%s\t%d\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%s\t%s" % (chrname,t_start-1,t_end,tid,0,strand,int(s_codon)-1,int(e_codon)-1,0,count,exons_sizes_str,exons_starts_str)
+	print("%s\t%d\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%s\t%s" % (chrname,t_start-1,t_end,tid,0,strand,int(s_codon)-1,int(e_codon)-1,0,count,exons_sizes_str,exons_starts_str),file=fho)
 fho.close()
 fho2.close()
 
-print "Done!"
+print("Done!")
